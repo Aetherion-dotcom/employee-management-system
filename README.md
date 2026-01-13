@@ -2,6 +2,9 @@
 
 # Societal Trends in Aadhaar Enrolment
 
+*I designed an end-to-end GovTech analytics platform that ingests Aadhaar enrolment data, detects anomalies, forecasts demand, and translates outputs into policy-ready decision insights through an interactive dashboard.*
+
+
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-1B2A38?style=for-the-badge&logo=matplotlib&logoColor=white)
@@ -12,18 +15,6 @@
 </div>
 
 ---
-
-*I designed an end-to-end GovTech analytics platform that ingests Aadhaar enrolment data, detects anomalies, forecasts demand, and translates outputs into policy-ready decision insights through an interactive dashboard.*
-
-### Unlocking Societal Trends in Aadhaar Enrolment and Updates
-
-Analyze Aadhaar enrolment and update data to:
-- Discover societal, demographic, and regional trends
-- Detect anomalies and inefficiencies
-- Build predictive and prescriptive insights
-- Support policy decisions and system optimization
-
----
 <div align="center">
 
 ## Work flow
@@ -31,15 +22,6 @@ Analyze Aadhaar enrolment and update data to:
 ![](img/work-flow.png)
 
 </div>
-
----
-## Methodology
-
-1. Data cleaning and preprocessing  
-2. Exploratory Data Analysis (EDA)  
-3. Trend and pattern identification  
-4. Anomaly detection  
-5. Insight generation and visualization  
 
 ---
 <div align="center">
