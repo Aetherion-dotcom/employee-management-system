@@ -78,4 +78,19 @@ public class PageController {
         model.addAttribute("pendingLeaves", leaveService.getPendingRequests());
         return "leaves";
     }
+
+    @GetMapping("/payroll")
+    public String payroll() {
+        return "payroll";
+    }
+
+    @GetMapping("/users")
+    public String users() {
+        return "users";
+    }
+
+    @GetMapping("/attendance")
+    public String attendance() {
+        return "attendance";
+    }
 }

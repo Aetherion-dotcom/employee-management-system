@@ -42,10 +42,11 @@ public class SecurityConfig {
                 .requestMatchers("/login", "/register", "/forgot-password", "/reset-password").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**", "/favicon.ico").permitAll()
                 .requestMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/actuator/health", "/actuator/info").permitAll()
+                
                 .requestMatchers("/error").permitAll()
 
                 // Admin endpoints
+                .requestMatchers("/actuator/**").hasRole("ADMIN")
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
 
