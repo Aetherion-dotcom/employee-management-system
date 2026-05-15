@@ -21,6 +21,7 @@ public class DashboardService {
     private final LeaveRequestRepository leaveRequestRepository;
     private final DepartmentRepository departmentRepository;
 
+    @Cacheable(value = "dashboard", key = "'global'")
     public DashboardResponse getDashboardData() {
         long totalEmployees = employeeRepository.countActive();
         long activeEmployees = employeeRepository.countByStatus(EmployeeStatus.ACTIVE);

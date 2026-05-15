@@ -14,6 +14,19 @@ spring:
     show-sql: true
   thymeleaf:
     cache: false
+  mail:
+    host: localhost
+    port: 3025
+    username: test
+    password: test
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+  cache:
+    type: none
 
 jwt:
   secret: d2f8c3b4e5a6f7890123456789abcdef0123456789abcdef0123456789abcdef

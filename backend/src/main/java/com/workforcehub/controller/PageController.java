@@ -40,6 +40,9 @@ public class PageController {
     @GetMapping("/forgot-password")
     public String forgotPasswordPage() { return "forgot-password"; }
 
+    @GetMapping("/reset-password")
+    public String resetPasswordPage() { return "reset-password"; }
+
     @GetMapping({"/", "/dashboard"})
     public String dashboard(Model model, @AuthenticationPrincipal UserDetails user) {
         model.addAttribute("dashboard", dashboardService.getDashboardData());
