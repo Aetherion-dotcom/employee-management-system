@@ -10,13 +10,14 @@ const WorkForceHub = {
         this.token = this.getCookie('jwt');
         this.initTheme();
         this.initSidebar();
+        this.initValidation();
         this.initTooltips();
     },
 
     // ===== Theme Toggle =====
     initTheme() {
         const saved = localStorage.getItem('wfh-theme') || 'light';
-        document.documentElement.setAttribute('data-theme', saved);
+        document.documentElement.setAttribute('data-bs-theme', saved);
         const btn = document.getElementById('themeToggle');
         if (btn) {
             btn.innerHTML = saved === 'dark' ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon"></i>';
@@ -25,36 +26,71 @@ const WorkForceHub = {
     },
 
     toggleTheme() {
-        const current = document.documentElement.getAttribute('data-theme');
+        const current = document.documentElement.getAttribute('data-bs-theme');
         const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
+        document.documentElement.setAttribute('data-bs-theme', next);
         localStorage.setItem('wfh-theme', next);
         const btn = document.getElementById('themeToggle');
         if (btn) btn.innerHTML = next === 'dark' ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon"></i>';
     },
 
     // ===== Sidebar =====
+    
+    // ===== Sidebar =====
     initSidebar() {
         const toggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebarOverlay');
+        
         if (toggle && sidebar) {
             toggle.addEventListener('click', () => {
-                sidebar.classList.toggle('show');
-                if (overlay) overlay.classList.toggle('show');
+                if (window.innerWidth < 992) {
+                    sidebar.classList.toggle('show');
+                    if (overlay) overlay.classList.toggle('show');
+                } else {
+                    sidebar.classList.toggle('collapsed');
+                }
             });
         }
+        
+        const closeBtn = document.getElementById('sidebarCloseBtn');
+        if (closeBtn && sidebar) {
+            closeBtn.addEventListener('click', () => {
+                if (window.innerWidth < 992) {
+                    sidebar.classList.remove('show');
+                    if (overlay) overlay.classList.remove('show');
+                } else {
+                    sidebar.classList.add('collapsed');
+                }
+            });
+        }
+
         if (overlay) {
             overlay.addEventListener('click', () => {
                 sidebar.classList.remove('show');
                 overlay.classList.remove('show');
             });
         }
+
         // Active nav link
         const currentPath = window.location.pathname;
         document.querySelectorAll('.nav-link-custom').forEach(link => {
             if (link.getAttribute('href') === currentPath) link.classList.add('active');
         });
+    },
+
+    
+    initValidation() {
+        const forms = document.querySelectorAll('.needs-validation')
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
     },
 
     initTooltips() {
