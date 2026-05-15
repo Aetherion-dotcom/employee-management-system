@@ -215,6 +215,30 @@ const WorkForceHub = {
         } else {
             this.showToast(resp?.message || 'Check-out failed', 'error');
         }
+    },
+
+    // ===== Leave Management =====
+    async approveLeave(leaveId) {
+        if (!confirm('Approve this leave request?')) return;
+        const resp = await this.apiCall(`/leave-requests/${leaveId}/approve?approverId=1`, 'PUT');
+        if (resp && resp.success) {
+            this.showToast('Leave request approved!', 'success');
+            setTimeout(() => window.location.reload(), 500);
+        } else {
+            this.showToast(resp?.message || 'Failed to approve leave', 'error');
+        }
+    },
+
+    async rejectLeave(leaveId) {
+        const reason = prompt('Enter rejection reason:');
+        if (reason === null) return; // cancelled
+        const resp = await this.apiCall(`/leave-requests/${leaveId}/reject?approverId=1`, 'PUT', { reason: reason });
+        if (resp && resp.success) {
+            this.showToast('Leave request rejected.', 'success');
+            setTimeout(() => window.location.reload(), 500);
+        } else {
+            this.showToast(resp?.message || 'Failed to reject leave', 'error');
+        }
     }
 };
 

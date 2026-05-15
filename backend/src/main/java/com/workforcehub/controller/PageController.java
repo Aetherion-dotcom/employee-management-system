@@ -1,10 +1,15 @@
 package com.workforcehub.controller;
 
+import com.workforcehub.repository.AttendanceRepository;
+import com.workforcehub.repository.PayrollRepository;
+import com.workforcehub.repository.UserRepository;
 import com.workforcehub.service.DashboardService;
 import com.workforcehub.service.DepartmentService;
 import com.workforcehub.service.EmployeeService;
 import com.workforcehub.service.LeaveService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+
 @Controller
 @RequiredArgsConstructor
 public class PageController {
@@ -20,6 +27,9 @@ public class PageController {
     private final EmployeeService employeeService;
     private final DepartmentService departmentService;
     private final LeaveService leaveService;
+    private final PayrollRepository payrollRepository;
+    private final UserRepository userRepository;
+    private final AttendanceRepository attendanceRepository;
 
     @GetMapping("/login")
     public String loginPage() { return "login"; }
@@ -80,17 +90,21 @@ public class PageController {
     }
 
     @GetMapping("/payroll")
-    public String payroll() {
+    public String payroll(Model model) {
+        model.addAttribute("payrolls", payrollRepository.findAll(PageRequest.of(0, 50, Sort.by(Sort.Direction.DESC, "id"))).getContent());
         return "payroll";
     }
 
     @GetMapping("/users")
-    public String users() {
+    public String users(Model model) {
+        model.addAttribute("users", userRepository.findAllActive());
         return "users";
     }
 
     @GetMapping("/attendance")
-    public String attendance() {
+    public String attendance(Model model, @AuthenticationPrincipal UserDetails user) {
+        model.addAttribute("attendanceRecords", attendanceRepository.findAll(PageRequest.of(0, 50, Sort.by(Sort.Direction.DESC, "attendanceDate"))).getContent());
+        model.addAttribute("username", user != null ? user.getUsername() : "Guest");
         return "attendance";
     }
 }

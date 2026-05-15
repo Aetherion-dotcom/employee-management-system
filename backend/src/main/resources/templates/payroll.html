@@ -63,14 +63,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>John Doe</td>
-                                <td>May 2026</td>
-                                <td>$10,000.00</td>
-                                <td>$2,000.00</td>
-                                <td>$8,000.00</td>
-                                <td><span class="badge bg-success">Processed</span></td>
+                            <tr th:each="pay : ${payrolls}">
+                                <td th:text="${pay.employee.fullName}">Employee</td>
+                                <td th:text="${pay.payPeriodStart + ' - ' + pay.payPeriodEnd}">Period</td>
+                                <td th:text="'$' + ${#numbers.formatDecimal(pay.basicSalary, 1, 2)}">$0.00</td>
+                                <td th:text="'$' + ${#numbers.formatDecimal(pay.deductions.add(pay.tax), 1, 2)}">$0.00</td>
+                                <td th:text="'$' + ${#numbers.formatDecimal(pay.netSalary, 1, 2)}">$0.00</td>
+                                <td>
+                                    <span th:if="${pay.paid}" class="badge bg-success">Paid</span>
+                                    <span th:unless="${pay.paid}" class="badge bg-warning text-dark">Pending</span>
+                                </td>
                                 <td><button class="btn btn-sm btn-outline-secondary"><i class="bi bi-download"></i> Payslip</button></td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(payrolls)}">
+                                <td colspan="7" class="text-center text-muted py-4">No payroll records found.</td>
                             </tr>
                         </tbody>
                     </table></div>

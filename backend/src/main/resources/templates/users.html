@@ -61,17 +61,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Admin User</td>
-                                <td>admin</td>
-                                <td><span class="badge bg-danger">ADMIN</span></td>
-                                <td><span class="badge bg-success">Active</span></td>
+                            <tr th:each="u : ${users}">
+                                <td th:text="${u.username}">User</td>
+                                <td><code th:text="${u.email}">email</code></td>
+                                <td>
+                                    <span th:each="role : ${u.roles}" class="badge me-1"
+                                          th:classappend="${role.name == 'ROLE_ADMIN' ? 'bg-danger' : (role.name == 'ROLE_HR' ? 'bg-info' : 'bg-secondary')}"
+                                          th:text="${role.name.replace('ROLE_', '')}">ROLE</span>
+                                </td>
+                                <td>
+                                    <span th:if="${u.enabled}" class="badge bg-success">Active</span>
+                                    <span th:unless="${u.enabled}" class="badge bg-secondary">Disabled</span>
+                                </td>
                                 <td>
                                     <div class="btn-group">
                                         <button class="btn btn-sm btn-light border" title="Edit Role"><i class="bi bi-pencil"></i></button>
                                         <button class="btn btn-sm btn-light border text-danger" title="Revoke Access"><i class="bi bi-ban"></i></button>
                                     </div>
                                 </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(users)}">
+                                <td colspan="5" class="text-center text-muted py-4">No users found.</td>
                             </tr>
                         </tbody>
                     </table></div>

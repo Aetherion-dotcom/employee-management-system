@@ -96,13 +96,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>John Doe</td>
-                                <td>May 15, 2026</td>
-                                <td>09:00 AM</td>
-                                <td>--:--</td>
-                                <td>--</td>
-                                <td><span class="badge bg-success">Present</span></td>
+                            <tr th:each="att : ${attendanceRecords}">
+                                <td th:text="${att.employee.fullName}">Employee</td>
+                                <td th:text="${att.attendanceDate}">Date</td>
+                                <td th:text="${att.checkInTime != null ? #temporals.format(att.checkInTime, 'hh:mm a') : '--:--'}">--:--</td>
+                                <td th:text="${att.checkOutTime != null ? #temporals.format(att.checkOutTime, 'hh:mm a') : '--:--'}">--:--</td>
+                                <td th:text="${att.workHours != null ? #numbers.formatDecimal(att.workHours, 1, 1) + 'h' : '--'}">--</td>
+                                <td>
+                                    <span class="badge"
+                                          th:classappend="${att.status.name() == 'PRESENT' ? 'bg-success' : (att.status.name() == 'LATE' ? 'bg-warning text-dark' : (att.status.name() == 'ABSENT' ? 'bg-danger' : 'bg-info'))}"
+                                          th:text="${att.status}">Status</span>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(attendanceRecords)}">
+                                <td colspan="6" class="text-center text-muted py-4">No attendance records found.</td>
                             </tr>
                         </tbody>
                     </table></div>
