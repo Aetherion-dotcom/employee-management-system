@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 
+import io.swagger.v3.oas.annotations.Hidden;
+
 @Controller
 @RequiredArgsConstructor
+@Hidden
 public class PageController {
     private final DashboardService dashboardService;
     private final EmployeeService employeeService;

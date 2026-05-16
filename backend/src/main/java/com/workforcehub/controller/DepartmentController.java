@@ -28,24 +28,28 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get department by ID")
     public ResponseEntity<ApiResponse<DepartmentResponse>> getById(@PathVariable Long id) {
         return ResponseEntity.ok(ApiResponse.success(departmentService.getDepartmentById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @Operation(summary = "Create a new department")
     public ResponseEntity<ApiResponse<DepartmentResponse>> create(@Valid @RequestBody DepartmentRequest req) {
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success("Department created", departmentService.createDepartment(req)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','HR')")
+    @Operation(summary = "Update an existing department")
     public ResponseEntity<ApiResponse<DepartmentResponse>> update(@PathVariable Long id, @Valid @RequestBody DepartmentRequest req) {
         return ResponseEntity.ok(ApiResponse.success("Department updated", departmentService.updateDepartment(id, req)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Delete a department")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         departmentService.deleteDepartment(id);
         return ResponseEntity.ok(ApiResponse.success("Department deleted", null));

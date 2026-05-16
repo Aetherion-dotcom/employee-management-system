@@ -18,6 +18,7 @@ public class DashboardController {
     private final DashboardService dashboardService;
 
     @GetMapping
+    @io.swagger.v3.oas.annotations.Operation(summary = "Get dashboard analytics data")
     public ResponseEntity<ApiResponse<DashboardResponse>> getDashboard() {
         return ResponseEntity.ok(ApiResponse.success(dashboardService.getDashboardData()));
     }
